@@ -1,16 +1,25 @@
 {
   "manifest_version": 2,
-
-  "name": "Star History",
-  "description": "A chrome extension showing star history graph of current github repository",
-  "version": "1.0",
-
-  "browser_action": {              // 会出现在地址栏右边，如果是 page_action 则出现在地址栏中
-    "default_icon": "ico.png",
-    "default_popup": "popup.html"    // 点击icon popup 出来的 html
+  "name": "issue-blog-view",
+  "homepage_url": "https://github.com/timqian/issue-blog-view",
+  "description": "better view for issue bloger",
+  "version": "0.0",
+  "icons": {
+    "128": "ico.png"
   },
-  "permissions": [
-    "activeTab",                 // see the URL of the current tab
-    "https://api.github.com/"   // gives access to this hosts(只要在这里申请权限，就可以做对该 url 做 Cross-Origin XMLHttpRequest了)
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*/*/issues"],
+      "run_at": "document_end",
+      "js": ["issueList.js"]
+    },
+    {
+      "matches": ["https://github.com/*/*/issues/*"],
+      "run_at": "document_end",
+      "js": ["issueView.js"]
+    }
+  ],
+  "permissions": [  // https://developer.chrome.com/extensions/declare_permissions
+    "https://github.com/*/*/issues", "https://github.com/*/*/issues/*"
   ]
 }
